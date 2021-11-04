@@ -12,18 +12,19 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::middleware('adminAuth')->group(function(){
+//     Route::any('/admin', function () {
+//         return view('dashboard.index');
+//     })->name('dashboard.admin');
+    
+// });
 
 Route::get('/', function () {
     return view('dashboard.auth.login');
-});
-
-// Route::post('/dash', function () {
-//     return view('dashboard.dash');
-// });
-
-//Route::any('login', 'AuthController@login')->name('dashboard.login');
-
-Route::any('login', function ()
-{
-    return dd(1);
 })->name('dashboard.login');
+
+Route::post('/','AuthController@login')->name('dashboard.login');
+
+Route::any('/admin', function () {
+    return view('dashboard.index');
+})->name('dashboard.admin');
