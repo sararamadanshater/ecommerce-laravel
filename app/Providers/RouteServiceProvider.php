@@ -75,7 +75,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapDashboardRoutes()
     {
-        Route::middleware('adminAuth')
+        Route::middleware('web')
              ->prefix('dashboard')
              ->namespace($this->dashboardnamespace)
              ->group(base_path('routes/dashboard.php'));
