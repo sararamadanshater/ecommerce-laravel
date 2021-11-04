@@ -25,6 +25,4 @@ Route::get('/', function () {
 
 Route::post('/','AuthController@login')->name('dashboard.login');
 
-Route::any('/admin', function () {
-    return view('dashboard.index');
-})->name('dashboard.admin');
+Route::any('/admin','HomeController@index')->name('dashboard.admin');
