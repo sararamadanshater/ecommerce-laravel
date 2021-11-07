@@ -19,3 +19,10 @@ Route::get('/', function () {
 // Route::get('/admin', function () {
 //     return view('dashboard.index');
 // })->name('dashboard.admin');
+
+Route::get('lang/{locale}', function ($locale) {
+    if (in_array($locale, config()->get('app.locales'))) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+})->name('lang');

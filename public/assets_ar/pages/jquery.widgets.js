@@ -9,25 +9,25 @@ $( document ).ready(function() {
     var DrawSparkline = function() {
         $('#sparkline1').sparkline([0, 23, 43, 35, 44, 45, 56, 37, 40], {
             type: 'line',
-            width: '100%',
+            width: $('#sparkline1').width(),
             height: '165',
             chartRangeMax: 50,
             lineColor: '#5fbeaa',
             fillColor: 'rgba(95, 190, 170, 0.3)',
             highlightLineColor: 'rgba(0,0,0,.1)',
-            highlightSpotColor: 'rgba(0,0,0,.2)'
+            highlightSpotColor: 'rgba(0,0,0,.2)',
         });
     
         $('#sparkline1').sparkline([25, 23, 26, 24, 25, 32, 30, 24, 19], {
             type: 'line',
-            width: '100%',
+            width: $('#sparkline1').width(),
             height: '165',
             chartRangeMax: 40,
             lineColor: '#5d9cec',
             fillColor: 'rgba(93, 156, 236, 0.3)',
             composite: true,
             highlightLineColor: 'rgba(0,0,0,.1)',
-            highlightSpotColor: 'rgba(0,0,0,.2)'
+            highlightSpotColor: 'rgba(0,0,0,.2)',
         });
     
         $('#sparkline2').sparkline([3, 6, 7, 8, 6, 4, 7, 10, 12, 7, 4, 9, 12, 13, 11, 12], {
@@ -47,7 +47,7 @@ $( document ).ready(function() {
     
         $('#sparkline4').sparkline([0, 23, 43, 35, 44, 45, 56, 37, 40], {
             type: 'line',
-            width: '100%',
+            width: $('#sparkline1').width(),
             height: '165',
             chartRangeMax: 50,
             lineColor: '#fb6d9d',
@@ -58,7 +58,7 @@ $( document ).ready(function() {
     
         $('#sparkline4').sparkline([25, 23, 26, 24, 25, 32, 30, 24, 19], {
             type: 'line',
-            width: '100%',
+            width: $('#sparkline1').width(),
             height: '165',
             chartRangeMax: 40,
             lineColor: '#5d9cec',
@@ -78,7 +78,7 @@ $( document ).ready(function() {
     
         $('#sparkline6').sparkline([3, 6, 7, 8, 6, 4, 7, 10, 12, 7, 4, 9, 12, 13, 11, 12], {
             type: 'line',
-            width: '100%',
+            width: $('#sparkline1').width(),
             height: '165',
             lineColor: '#fb6d9d',
             fillColor: 'transparent',
@@ -118,13 +118,13 @@ $( document ).ready(function() {
                     $('#sparkline5').sparkline(mpoints, {
                         tooltipSuffix: ' pixels per second',
                         type: 'line',
-                        width: '100%',
+                        width: $('#sparkline1').width(),
                         height: '165',
                         chartRangeMax: 50,
                         lineColor: '#1e88e5',
                         fillColor: 'rgba(30, 136, 229, 0.3)',
                         highlightLineColor: 'rgba(24,147,126,.1)',
-                        highlightSpotColor: 'rgba(24,147,126,.2)'
+                        highlightSpotColor: 'rgba(24,147,126,.2)',
                     });
                 }
                 lastmousetime = timenow;

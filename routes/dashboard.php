@@ -23,6 +23,10 @@ Route::get('/', function () {
     return view('dashboard.auth.login');
 })->name('dashboard.login');
 
-Route::post('/','AuthController@login')->name('dashboard.login');
 
-Route::any('/admin','HomeController@index')->name('dashboard.admin');
+// Route::middleware('adminAuth')->group(function(){
+    Route::post('/','AuthController@login')->name('dashboard.login');
+    Route::any('/admin','HomeController@index')->name('dashboard.admin');
+    Route::resource('sliders','SliderController')->except(['show','edit','update']);
+
+// });

@@ -38,8 +38,8 @@ $(document).ready(function () {
 /**
  * Hack for table loading issue - ideally this should be fixed in plugin code itself.
  */
-$(window).on('load', function () {
-    $('[data-toggle="table"]').show();
+$(window).load(function() {
+   $('[data-toggle="table"]').show();
 });
 
 // Sample format for Invoice Column.
@@ -89,4 +89,5 @@ function priceSorter(a, b) {
     if (a < b) return -1;
     return 0;
 }
+
 

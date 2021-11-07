@@ -201,7 +201,7 @@ function($) {
     //initializing nicescroll
     Components.prototype.initNiceScrollPlugin = function() {
         //You can change the color of scroll bar here
-        $.fn.niceScroll &&  $(".nicescroll").niceScroll({railalign: 'left', cursorcolor: '#98a6ad',cursorwidth:'6px', cursorborderradius: '5px'});
+        $.fn.niceScroll &&  $(".nicescroll").niceScroll({ cursorcolor: '#98a6ad',cursorwidth:'6px', cursorborderradius: '5px'});
     },
 
     //initializing Slimscroll

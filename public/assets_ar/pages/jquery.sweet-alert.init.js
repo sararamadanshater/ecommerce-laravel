@@ -70,7 +70,7 @@
             swal({
                 title: "Sweet!",
                 text: "Here's a custom image.",
-                imageUrl: "../plugins/bootstrap-sweetalert/thumbs-up.jpg"
+                imageUrl: "assets/plugins/bootstrap-sweetalert/thumbs-up.jpg"
             });
         });
 
@@ -91,7 +91,7 @@
                 text: "You will not be able to recover this imaginary file!",
                 type: "info",
                 showCancelButton: true,
-                cancelButtonClass: 'btn-default btn-md waves-effect',
+                cancelButtonClass: 'btn-white btn-md waves-effect',
                 confirmButtonClass: 'btn-primary btn-md waves-effect waves-light',
                 confirmButtonText: 'Primary!'
             });
@@ -104,7 +104,7 @@
                 text: "You will not be able to recover this imaginary file!",
                 type: "info",
                 showCancelButton: true,
-                cancelButtonClass: 'btn-default btn-md waves-effect',
+                cancelButtonClass: 'btn-white btn-md waves-effect',
                 confirmButtonClass: 'btn-info btn-md waves-effect waves-light',
                 confirmButtonText: 'Info!'
             });
@@ -117,7 +117,7 @@
                 text: "You will not be able to recover this imaginary file!",
                 type: "success",
                 showCancelButton: true,
-                cancelButtonClass: 'btn-default btn-md waves-effect',
+                cancelButtonClass: 'btn-white btn-md waves-effect',
                 confirmButtonClass: 'btn-success btn-md waves-effect waves-light',
                 confirmButtonText: 'Success!'
             });
@@ -130,7 +130,7 @@
                 text: "You will not be able to recover this imaginary file!",
                 type: "warning",
                 showCancelButton: true,
-                cancelButtonClass: 'btn-default btn-md waves-effect',
+                cancelButtonClass: 'btn-white btn-md waves-effect',
                 confirmButtonClass: 'btn-warning btn-md waves-effect waves-light',
                 confirmButtonText: 'Warning!'
             });
@@ -143,7 +143,7 @@
                 text: "You will not be able to recover this imaginary file!",
                 type: "error",
                 showCancelButton: true,
-                cancelButtonClass: 'btn-default btn-md waves-effect',
+                cancelButtonClass: 'btn-white btn-md waves-effect',
                 confirmButtonClass: 'btn-danger btn-md waves-effect waves-light',
                 confirmButtonText: 'Danger!'
             });
