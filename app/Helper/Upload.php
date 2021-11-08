@@ -10,6 +10,8 @@ use File;
 class Upload
 {
 
+    
+
     public static function uploadImage($image, $path, $oldImage = null)
     {
         $name = time() . '.' . $image->getClientOriginalExtension();

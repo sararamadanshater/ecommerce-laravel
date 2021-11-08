@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\dashboard;
 use DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\dashboard\SliderRequest;
 use Illuminate\Http\Request;
 use App\Models\Slider;
 use App\Helper\Upload;
@@ -35,9 +36,11 @@ class SliderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SliderRequest $request)
     {
         $imageName = Upload::uploadImage($request->file('image'), 'slider');
+
+    
         DB::table('sliders')->insert([
             'image'         => $imageName,
             'display'       => $request->get('display'),

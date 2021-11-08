@@ -37,7 +37,7 @@
                                         <tr class="gradeX {{ $slider['id'] }}">
                                             <td style="text-align:center;">{{ $key + 1 }}</td>
                                             <td style="text-align:center;">
-                                                <img src="{{ $slider['image'] }}" alt="{{ $slider['image'] }}" width="150">
+                                                <img src="{{ asset($slider['image']) }}" alt="{{ $slider['image'] }}" width="150">
                                             </td>
                                             <td style="text-align:center;">
                                                 @if ($slider['display'] == 1)
@@ -47,13 +47,20 @@
                                                 @endif
                                             </td>
                                             <td class="actions">
-                                                <a data-id="{{ $slider['id'] }}" class="deletemsg" id="deleteParent"><i class="fa fa-trash-o"></i></a>
+                                                {{-- <a data-id="{{ $slider['id'] }}" class="deletemsg" id="deleteParent"><i class="fa fa-trash-o"></i></a> --}}
+                                                <form method="POST" class="deleteForm" action="{{route('sliders.destroy',$slider['id'] )}}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                        
+                                                    <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
+                                                </form>
+                                                
                                             </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="4" style="text-align: center!important;">@lang('dashboard.noElements')</td>
+                                        <td colspan="4" style="text-align:center!important;">@lang('dashboard.noElements')</td>
                                     </tr>
                                 @endif
                                 </tbody>
@@ -66,9 +73,6 @@
     </div>
 </div>
 
-<form method="POST" class="deleteForm">
-    @csrf
-    @method('DELETE')
-</form>
+
 
 @endsection
