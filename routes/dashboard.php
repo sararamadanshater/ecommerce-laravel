@@ -19,14 +19,28 @@ use Illuminate\Support\Facades\Route;
     
 // });
 
-Route::get('/', function () {
-    return view('dashboard.auth.login');
-})->name('dashboard.login');
-
-
-// Route::middleware('adminAuth')->group(function(){
-    Route::post('/','AuthController@login')->name('dashboard.login');
-    Route::any('/admin','HomeController@index')->name('dashboard.admin');
-    Route::resource('sliders','SliderController')->except(['show','edit','update']);
-
+// Route::get('/', function () {
+//     return view('dashboard.auth.login');
 // });
+
+// Route::post('/','AuthController@login')->name('dashboard.login');
+
+//  Route::middleware(['adminAuth'])->group(function(){
+    
+//     Route::any('/admin','HomeController@index')->name('dashboard.admin');
+//     Route::resource('sliders','SliderController')->except(['show','edit','update']);
+    
+//  });
+
+Route::get('login', function () {
+        return view('dashboard.auth.login');
+    });
+ 
+Route::post('login', 'AuthController@login')->name('dashboard.login');
+
+Route::middleware(['adminAuth'])->group(function () {
+    Route::get('/', 'HomeController@index')->name('dashboard');
+    Route::any('logout', 'AuthController@logout')->name('dashboard.logout');
+    Route::resource('sliders','SliderController')->except(['show','edit','update']);
+    
+});

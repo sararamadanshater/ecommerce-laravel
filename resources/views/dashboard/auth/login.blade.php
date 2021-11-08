@@ -6,15 +6,32 @@
         <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
         <meta name="author" content="Coderthemes">
 
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
-        <title>Ubold - Responsive Admin Dashboard Template</title>
-        
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
-        <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+         <link rel="shortcut icon" href="{{ asset('assets_' . app()->getLocale() . '/images/favicon_1.ico') }}">
 
-        <script src="assets/js/modernizr.min.js"></script>
-        
+         <title>@lang('login.dashboardTitle')</title>
+     
+         <link rel="preconnect" href="https://fonts.gstatic.com">
+         <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
+     
+         <style>
+             * {
+                 font-family: 'Changa', sans-serif;
+             }
+             h1, h2, h3, h4, h5, h6 {
+                 font-family: 'Changa', sans-serif !important;
+             }
+         </style>
+     
+         <link href="{{ asset('assets_' . app()->getLocale() . '/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+         <link href="{{ asset('assets_' . app()->getLocale() . '/css/core.css') }}" rel="stylesheet" type="text/css" />
+         <link href="{{ asset('assets_' . app()->getLocale() . '/css/components.css') }}" rel="stylesheet" type="text/css" />
+         <link href="{{ asset('assets_' . app()->getLocale() . '/css/icons.css') }}" rel="stylesheet" type="text/css" />
+         <link href="{{ asset('assets_' . app()->getLocale() . '/css/pages.css') }}" rel="stylesheet" type="text/css" />
+         <link href="{{ asset('assets_' . app()->getLocale() . '/css/menu.css') }}" rel="stylesheet" type="text/css" />
+         <link href="{{ asset('assets_' . app()->getLocale() . '/css/responsive.css') }}" rel="stylesheet" type="text/css" />
+         <script src="{{ asset('assets_' . app()->getLocale() . '/js/modernizr.min.js') }}"></script>
+
+
     </head>
     <body>
 
@@ -26,9 +43,19 @@
                     <h4 class="text-center"> Sign In to <strong class="text-custom">UBold</strong></h4>
                 </div>
 
+                @if(session()->has('danger'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{ session('danger') }}
+                </div>
+            @endif
+
+
+
+
 
                 <div class="p-20">
-                    <form class="form-horizontal m-t-20" method="POST" action="{{route('dashboard.admin')}}" enctype="multipart/form-data">
+                    <form class="form-horizontal m-t-20" method="POST" action="{{route('dashboard.login')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group ">
                             <div class="col-12">

@@ -80,8 +80,8 @@ return [
     |
     */
 
-    'locale' => 'ar',
-    'locales' => ['ar', 'en'],
+    'locale' => 'en',
+    'locales' => ['en', 'ar'],
 
 
     'currency' => 'BHD',

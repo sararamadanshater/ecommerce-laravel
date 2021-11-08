@@ -11,8 +11,8 @@
     <div class="content-page">
         <!-- Start content -->
         <div class="content">
-            <div class="container" style="height: 1200px">
-                <p>succes</p>
+            <div class="container" >
+                @include('dashboard.layouts.statics')
             </div>
         </div>
     </div>

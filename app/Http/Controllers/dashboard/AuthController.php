@@ -10,13 +10,14 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // dd(1);
-        if ($request->method() == 'POST') {
+         if ($request->method() == 'POST') {
             $credentials = $request->only('email', 'password');
 
-            if (auth()->attempt($credentials)) {
+            if (auth('admin')->attempt($credentials)) {
                 // Authentication passed...
                 //  return redirect()->intended('dashboard.admin');
-                return view('dashboard.admin');
+                // return view('dashboard.home.index');
+                return redirect()->intended('dashboard');
             }
            return redirect()->back()->with('danger', 'email or password is incorrect');
         } else {
