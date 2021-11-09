@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Ubold - Responsive Admin Dashboard Template</title>
+        <title>SARA Dashboard Template</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -92,20 +92,20 @@
                         <!-- Navigation Menu-->
                         <ul class="navigation-menu">
                             <li class="has-submenu">
-                                <a href=""><i class="fa fa-home"></i>@lang('dashboard.home')</a>
+                                <a href="{{route('dashboard')}}"><i class="fa fa-home"></i>@lang('dashboard.home')</a>
                             </li>
                             <li id="itemCategory" class="has-submenu">
                                 <a href="#"><i class="fa fa-sitemap"></i>@lang('dashboard.categories')</a>
                                 <ul class="submenu">
-                                    <li><a href="">@lang('dashboard.viewAll')</a></li>
-                                    <li><a href="">@lang('dashboard.addCategory')</a></li>
+                                    <li><a href="{{route('categories.index')}}">@lang('dashboard.viewAll')</a></li>
+                                    <li><a href="{{route('categories.create')}}">@lang('dashboard.addCategory')</a></li>
                                 </ul>
                             </li>
                             <li id="itemProducts" class="has-submenu">
                                 <a href="#"><i class="fa fa-product-hunt"></i>@lang('dashboard.products')</a>
                                 <ul class="submenu">
-                                    <li><a href="">@lang('dashboard.viewAll')</a></li>
-                                    <li><a href="">@lang('dashboard.addProduct')</a></li>
+                                    <li><a href="{{route('products.index')}}">@lang('dashboard.viewAll')</a></li>
+                                    <li><a href="{{route('products.create')}}">@lang('dashboard.addProduct')</a></li>
                                 </ul>
                             </li>
                             <li id="itemSlider" class="has-submenu">

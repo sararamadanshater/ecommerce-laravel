@@ -64,4 +64,17 @@ class SliderController extends Controller
         $slider->delete();
         return redirect()->back()->with('success', __('messages.imageDeletedSuccessfully'));
     }
+
+
+    public function switch()
+    {
+        $slider = Slider::findOrFail(request('id'));
+        $slider->display = request('display');
+        $slider->save();
+       
+    }
+
+
+
+
 }

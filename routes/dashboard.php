@@ -41,6 +41,26 @@ Route::post('login', 'AuthController@login')->name('dashboard.login');
 Route::middleware(['adminAuth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('dashboard');
     Route::any('logout', 'AuthController@logout')->name('dashboard.logout');
+
     Route::resource('sliders','SliderController')->except(['show','edit','update']);
+    Route::post('sliders/switch', 'SliderController@switch')
+        ->name('sliders.switch');
+
+    Route::resource('products', 'ProductController');
+
+    Route::resource('categories', 'CategoryController');
+    // Route::post('categories/switch', 'CategoryController@switch')
+    //     ->name('categories.switch');
+    // Route::post('categories/category/products', 'CategoryController@products')
+    //     ->name('categories.products');
+
+    
+    // Route::post('products/switch', 'ProductController@switch')
+    //     ->name('products.switch');
+    // Route::delete('products/images/{id}', 'ProductController@destroyImage')
+    //     ->name('products.destroyImage');
+
+
+    
     
 });

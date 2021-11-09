@@ -40,7 +40,7 @@
         <div class="wrapper-page">
             <div class="card-box">
                 <div class="panel-heading">
-                    <h4 class="text-center"> Sign In to <strong class="text-custom">UBold</strong></h4>
+                    <h4 class="text-center"> Sign In to <strong class="text-custom">SARA</strong></h4>
                 </div>
 
                 @if(session()->has('danger'))
