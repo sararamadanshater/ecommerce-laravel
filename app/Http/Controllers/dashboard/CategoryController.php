@@ -37,7 +37,7 @@ class CategoryController extends Controller
 
     public function show($id){
         $category=Category::findOrFail($id);
-        return view('dashboard.category.show');
+        return view('dashboard.category.show',compact('category'));
     }
 
     public function edit($id){
@@ -63,7 +63,29 @@ class CategoryController extends Controller
 
     }
 
+    public function switch()
+    {
+        $category = Category::findOrFail(request('id'));
+        $category->display = request('display');
+        $category->save();
+    }
 
+    public function products($id)
+    {
+        $products = Product::where([
+            ['category_id', $id],
+            ['display', 1]
+        ])->get([
+            'id',
+            "name_" . app()->getLocale() . " as name"
+        ]);
+
+        if (!$products) {
+            $products = [];
+        }
+
+        return response()->json($products, 200);
+    }
     
 
 

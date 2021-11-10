@@ -46,17 +46,17 @@ Route::middleware(['adminAuth'])->group(function () {
     Route::post('sliders/switch', 'SliderController@switch')
         ->name('sliders.switch');
 
-    Route::resource('products', 'ProductController');
+  
 
     Route::resource('categories', 'CategoryController');
-    // Route::post('categories/switch', 'CategoryController@switch')
-    //     ->name('categories.switch');
+    Route::post('categories/switch', 'CategoryController@switch')
+        ->name('categories.switch');
     // Route::post('categories/category/products', 'CategoryController@products')
     //     ->name('categories.products');
 
-    
-    // Route::post('products/switch', 'ProductController@switch')
-    //     ->name('products.switch');
+    Route::resource( 'products','ProductController',);
+    Route::post('products/switch', 'ProductController@switch')
+        ->name('products.switch');
     // Route::delete('products/images/{id}', 'ProductController@destroyImage')
     //     ->name('products.destroyImage');
 

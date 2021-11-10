@@ -20,7 +20,7 @@
 
                     <div class="panel">
                         <div class="panel-body">
-                            {{-- @include('dashboard.layouts.messages') --}}
+                            @include('dashboard.layouts.messages')
                             <div class="table-responsive">
                                 <table class="table table-striped" id="custom_tbl_dt">
                                     <thead>
@@ -59,13 +59,13 @@
                                                 <a href="{{ route('categories.edit', $category['id']) }}" class="on-default"><i class="fa fa-pencil"></i></a>
                                             </td>
                                             <td class="actions">
-                                                {{-- <a data-id="{{ $category['id'] }}" class="deletemsg" id="deleteParent"><i class="fa fa-trash-o"></i></a> --}}
-                                                <form method="POST" class="deleteForm" action="{{route('categories.destroy',$category['id'] )}}">
+                                                <a data-id="{{ $category['id'] }}" class="deletemsg" id="deleteParent"><i class="fa fa-trash-o"></i></a>
+                                                {{-- <form method="POST" class="deleteForm" action="{{route('categories.destroy',$category['id'] )}}">
                                                     @csrf
                                                     @method('DELETE')
                                         
                                                     <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
-                                                </form>
+                                                </form> --}}
                                             </td>
                                         </tr>
                                         @endforeach
@@ -90,3 +90,107 @@
     </form>
 
 @endsection
+
+@push('custom-css')
+    <link href="{{ asset('assets_' . app()->getLocale() . '/plugins/sweetalert/dist/sweetalert.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets_' . app()->getLocale() . '/plugins/switchery/css/switchery.min.css') }}" rel="stylesheet" />
+@endpush
+
+@push('custom-scripts')
+    <script src="{{ asset('assets_' . app()->getLocale() . '/plugins/bootbox/bootbox.min.js') }}"></script>
+    <script src="{{ asset('assets_' . app()->getLocale() . '/plugins/bootbox/ui-alert-dialog-api.js') }}"></script>
+    <script>
+        $("#itemCategory").addClass('active');
+        let body = $('body');
+
+        body.on('click', '.deletemsg', function () {
+            const id = $(this).attr('data-id');
+
+            bootbox.dialog({
+                message: "@lang('dashboard.askDelete')",
+                title: "@lang('dashboard.deleteMessage')",
+                buttons: {
+                    danger: {
+                        label: "@lang('dashboard.cancel')",
+                        className: "btn-danger"
+                    },
+                    main: {
+                        label: "@lang('dashboard.delete')",
+                        className: "btn-primary",
+                        callback: function () {
+                            let deleteForm = $(".deleteForm");
+                            deleteForm.attr('action', "categories/" + id);
+                            deleteForm.submit();
+                        }
+                    }
+                }
+            });
+        });
+
+        body.on('change', '.off', function () {
+            const id = $(this).attr('data-id');
+            swal({
+                title: "@lang('dashboard.hideCategory')",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "@lang('dashboard.yes')",
+                cancelButtonText: "@lang('dashboard.cancel')",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    swal("@lang('dashboard.hiddenCategory')", "", "success");
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('categories.switch') }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: id,
+                            display: 0
+                        },
+                        dataType: 'text',
+                        cache: false,
+                        success: function () {
+                            $(".off[data-id=" + id + "]").toggleClass('on off');
+                        }
+                    });
+                }
+            });
+        });
+
+        body.on('change', '.on', function () {
+            const id = $(this).attr('data-id');
+            swal({
+                title: "@lang('dashboard.showCategory')",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "@lang('dashboard.yes')",
+                cancelButtonText: "@lang('dashboard.cancel')",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    swal("@lang('dashboard.showedCategory')", "", "success");
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('categories.switch') }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: id,
+                            display: 1
+                        },
+                        dataType: 'text',
+                        cache: false,
+                        success: function () {
+                            $(".on[data-id=" + id + "]").toggleClass('on off');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

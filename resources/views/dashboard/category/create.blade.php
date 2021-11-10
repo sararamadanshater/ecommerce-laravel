@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card-box">
-                                {{-- @include('dashboard.layouts.messages') --}}
+                                @include('dashboard.layouts.messages')
                                 <form method="POST" action="{{ route('categories.store') }}" enctype="multipart/form-data" data-parsley-validate novalidate>
                                     @csrf
                                     <div class="form-group col-md-6">

@@ -16,20 +16,21 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id');
+            $table->string('agent');
             $table->string('name_ar', 100);
             $table->string('name_en', 100);
             $table->text('desc_ar');
             $table->text('desc_en');
             $table->integer('quantity');
             $table->decimal('price', 8, 3);
-            $table->string('code');
+            $table->date('expire');
+            $table->string('weight');
             $table->string('cost');
-            $table->decimal('discount', 8, 3)->nullable();
-            $table->date('discount_from')->nullable();
-            $table->date('discount_to')->nullable();
+            $table->decimal('discount', 8, 3);
+            $table->date('discount_from');
+            $table->date('discount_to');
             $table->boolean('display')->default(1);
             $table->tinyInteger('deliverable')->default(1);
-            $table->boolean('featured')->default(0);
             $table->foreign('category_id')->on('categories')->references('id');
             $table->timestamps();
         });

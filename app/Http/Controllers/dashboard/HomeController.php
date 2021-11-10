@@ -14,6 +14,6 @@ class HomeController extends Controller
         $sliderCount= Slider::all()->count();
         $productCount= Product::all()->count();
         $categoryCount= Category::all()->count();
-        return view('dashboard.home.index',compact( 'sliderCount','productCount','categoryCount'));
+        return view('dashboard.home.index',compact( 'sliderCount','categoryCount','productCount'));
     }
 }

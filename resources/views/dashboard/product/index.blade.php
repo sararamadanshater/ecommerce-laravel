@@ -20,12 +20,17 @@
 
                     <div class="panel">
                         <div class="panel-body">
-                            <form>
+                            {{-- <form>
                                 <div class="row">
                                     <div class="form-group col-md-4">
                                         <label>@lang('dashboard.price')</label>
                                         <input type="text" name="price_from" class="form-control m-b-10" placeholder="@lang('dashboard.from')" value="{{ $_GET['price_from'] ?? '' }}">
                                         <input type="text" name="price_to" class="form-control" placeholder="@lang('dashboard.to')" value="{{ $_GET['price_to'] ?? '' }}">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>@lang('dashboard.expire')</label>
+                                        <input type="date" name="expire_from" class="form-control m-b-10" value="{{ $_GET['expire_from'] ?? '' }}">
+                                        <input type="date" name="expire_to" class="form-control" value="{{ $_GET['expire_to'] ?? '' }}">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>@lang('dashboard.quantity')</label>
@@ -42,7 +47,16 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    
+                                    <div class="form-group col-md-4">
+                                        <label>@lang('dashboard.agent')</label>
+                                        <select id="agent" name="agent" class="form-control">
+                                            <option value="">---</option>
+                                            @php($_GET['agent'] = $_GET['agent'] ?? '')
+                                            @foreach($agents as $agent)
+                                                <option {{ $agent['id'] == $_GET['agent'] ? 'selected' : '' }} value="{{ $agent['id'] }}">{{ $agent['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="form-group col-md-4">
                                         <label>@lang('dashboard.name')</label>
                                         <input type="text" name="name" class="form-control" value="{{ $_GET['name'] ?? '' }}">
@@ -51,9 +65,9 @@
                                         <button class="btn btn-primary">بحث</button>
                                     </div>
                                 </div>
-                            </form>
+                            </form> --}}
                             <hr>
-                            {{-- @include('dashboard.layouts.messages') --}}
+                            @include('dashboard.layouts.messages')
                             <div class="table-responsive">
                                 <table class="table table-striped" id="custom_tbl_dt">
                                     <thead>
@@ -83,7 +97,7 @@
                                                 <a href="{{ route('categories.show', $product['category_id']) }}">{{ $product['category']['name_' . app()->getLocale()] }}</a>
                                             </td>
                                             <td style="text-align:center;">
-                                                <a href="{{ route('agents.show', $product['agent_id']) }}">{{ $product->agent['name'] }}</a>
+                                                <a href="">{{ $product['agent'] }}</a>
                                             </td>
                                             <td style="text-align:center;">{{ $product['price'] }}</td>
                                             <td style="text-align:center;">
@@ -99,9 +113,9 @@
                                             <td>
                                                 <a href="{{ route('products.show', $product['id']) }}" class="on-default"><i class="fa fa-eye"></i></a>
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 <a href="{{ route('products.comments', $product['id']) }}" class="on-default"><i class="fa fa-comment-o"></i></a>
-                                            </td>
+                                            </td> --}}
                                             <td>
                                                 <a href="{{ route('products.edit', $product['id']) }}" class="on-default"><i class="fa fa-pencil"></i></a>
                                             </td>
@@ -131,3 +145,109 @@
     </form>
 
 @endsection
+
+@push('custom-css')
+    <link href="{{ asset('assets_' . app()->getLocale() . '/plugins/sweetalert/dist/sweetalert.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets_' . app()->getLocale() . '/plugins/switchery/css/switchery.min.css') }}" rel="stylesheet" />
+@endpush
+
+@push('custom-scripts')
+    <script src="{{ asset('assets_' . app()->getLocale() . '/plugins/bootbox/bootbox.min.js') }}"></script>
+    <script src="{{ asset('assets_' . app()->getLocale() . '/plugins/bootbox/ui-alert-dialog-api.js') }}"></script>
+    <script>
+        $("#itemProducts").addClass('active');
+        let body = $('body');
+
+        body.on('click', '.deletemsg', function () {
+            const id = $(this).attr('data-id');
+
+            bootbox.dialog({
+                message: "@lang('dashboard.askDelete')",
+                title: "@lang('dashboard.deleteMessage')",
+                buttons: {
+                    danger: {
+                        label: "@lang('dashboard.cancel')",
+                        className: "btn-danger"
+                    },
+                    main: {
+                        label: "@lang('dashboard.delete')",
+                        className: "btn-primary",
+                        callback: function () {
+                            let deleteForm = $(".deleteForm");
+                            deleteForm.attr('action', "products/" + id);
+                            deleteForm.submit();
+                        }
+                    }
+                }
+            });
+        });
+
+        body.on('change', '.off', function () {
+            const id = $(this).attr('data-id');
+            swal({
+                title: "@lang('dashboard.hideProduct')",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "@lang('dashboard.yes')",
+                cancelButtonText: "@lang('dashboard.cancel')",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    swal("@lang('dashboard.hiddenProduct')", "", "success");
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('products.switch') }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: id,
+                            display: 0
+                        },
+                        dataType: 'text',
+                        cache: false,
+                        success: function () {
+                            $(".off[data-id=" + id + "]").toggleClass('on off');
+                        }
+                    });
+                }
+            });
+        });
+
+        body.on('change', '.on', function () {
+            const id = $(this).attr('data-id');
+            swal({
+                title: "@lang('dashboard.showProduct')",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "@lang('dashboard.yes')",
+                cancelButtonText: "@lang('dashboard.cancel')",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    swal("@lang('dashboard.showedProduct')", "", "success");
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('products.switch') }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: id,
+                            display: 1
+                        },
+                        dataType: 'text',
+                        cache: false,
+                        success: function () {
+                            $(".on[data-id=" + id + "]").toggleClass('on off');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+@endpush
+
+

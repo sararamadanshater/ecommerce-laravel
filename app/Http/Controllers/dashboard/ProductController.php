@@ -2,69 +2,51 @@
 
 namespace App\Http\Controllers\dashboard;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use DB;
 use App\Helper\Upload;
-use App\Http\Requests\Dashboard\ProductRequest;
+use App\Http\Requests\dashboard\ProductRequest;
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductImage;
-use DB;
-use Exception;
-use Illuminate\Http\Response;
-
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    
-    public function index()
-    {
+    public function index(){
         $categories = Category::all();
         $products = Product::where('id', '>', 0);
-        if (isset($_GET['price_from']) && !empty($_GET['price_from'])) {
-            $products = $products->where('price', '>=', $_GET['price_from']);
-        }
-        if (isset($_GET['price_to']) && !empty($_GET['price_to'])) {
-            $products = $products->where('price', '<=', $_GET['price_to']);
-        }
-        if (isset($_GET['category']) && !empty($_GET['category'])) {
-            $products = $products->where('category_id', $_GET['category']);
-        }
-    
-        if (isset($_GET['name']) && !empty($_GET['name'])) {
-            $products = $products->where(function ($query) {
-                $query->where('name_ar', 'LIKE', "%{$_GET['name']}%")
-                    ->orWhere('name_en', 'LIKE', "%{$_GET['name']}%");
-            });
-        }
-        $products = $products->get();
-
-        return view('dashboard.product.index', compact('products', 'categories'));
+        $products=$products->get();
+        return view('dashboard.product.index',compact('categories','products'));
+    }
+    public function switch()
+    {
+        $product = Product::findOrFail(request('id'));
+        $product->display = request('display');
+        $product->save();
     }
 
-   
     public function create()
     {
         $categories = Category::all();
         return view('dashboard.product.create', compact('categories'));
     }
 
-    
     public function store(ProductRequest $request)
     {
-        $next_id = DB::select("SHOW TABLE STATUS LIKE 'products'");
-        $next_id = $next_id[0]->Auto_increment;
-        $imagesName = Upload::uploadImages(request('images'),
-            'products/' . $next_id);
-        DB::table('products')->insert([
+        // $next_id = DB::select("SHOW TABLE STATUS LIKE 'products'");
+        // $next_id = $next_id[0]->Auto_increment;
+       
+        $id = DB::table('products')->insertGetId([
             'category_id'   => $request->get('category'),
+            'agent'         => $request->get('agent'),
             'name_ar'       => $request->get('name_ar'),
             'name_en'       => $request->get('name_en'),
             'desc_ar'       => $request->get('desc_ar'),
             'desc_en'       => $request->get('desc_en'),
             'price'         => $request->get('price'),
             'quantity'      => $request->get('quantity'),
-            'code'          => $request->get('code'),
+            'expire'        => $request->get('expire'),
+            'weight'        => $request->get('weight'),
             'cost'          => $request->get('cost'),
             'discount'      => $request->get('discount') ?? null,
             'discount_from' => $request->get('discount_from') ?? null,
@@ -75,53 +57,23 @@ class ProductController extends Controller
             'updated_at'    => date('Y-m-d H:i:s'),
         ]);
 
+        $imagesName = Upload::uploadImages(request('images'),
+        'products/' .$id);
+
         foreach ($imagesName as $image) {
             DB::table('product_images')->insert([
-                'product_id'    => $next_id,
+                'product_id'    => $id ,
                 'image'         => $image,
             ]);
         }
         return redirect()->back()->with('success', __('messages.productAddedSuccessfully'));
     }
 
-    
-    
-//     public function show($id)
-//     {
-//         //
-//     }
 
-//     /**
-//      * Show the form for editing the specified resource.
-//      *
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function edit($id)
-//     {
-//         //
-//     }
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('dashboard.product.show', compact('product'));
+    }
 
-//     /**
-//      * Update the specified resource in storage.
-//      *
-//      * @param  \Illuminate\Http\Request  $request
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function update(Request $request, $id)
-//     {
-//         //
-//     }
-
-//     /**
-//      * Remove the specified resource from storage.
-//      *
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function destroy($id)
-//     {
-//         //
-//     }
 }
