@@ -54,7 +54,6 @@ class ProductRequest extends FormRequest
                 'desc_en'       => 'required|between:3,1000',
                 'price'         => 'required|numeric|between:0,99999.999',
                 'quantity'      => 'required|integer|between:0,9999999',
-                'code'          => 'required|string|between:1,50',
                 'expire'        => 'required|date',
                 'weight'        => 'required',
                 'cost'          => 'required',

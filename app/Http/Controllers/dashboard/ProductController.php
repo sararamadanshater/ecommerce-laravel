@@ -33,8 +33,6 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        // $next_id = DB::select("SHOW TABLE STATUS LIKE 'products'");
-        // $next_id = $next_id[0]->Auto_increment;
        
         $id = DB::table('products')->insertGetId([
             'category_id'   => $request->get('category'),
@@ -74,6 +72,64 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         return view('dashboard.product.show', compact('product'));
+    }
+
+    public function edit($id){
+        $categories=Category::all();
+        $product=Product::findOrFail($id);
+        return view('dashboard.product.edit',compact('categories','product'));
+    }
+
+    public function update(ProductRequest $request,$id)
+    {
+        $product                = Product::findOrFail($id);
+        $product->category_id   = $request->get('category');
+        $product->name_ar       = $request->get('name_ar');
+        $product->name_en       = $request->get('name_en');
+        $product->desc_ar       = $request->get('desc_ar');
+        $product->desc_en       = $request->get('desc_en');
+        $product->price         = $request->get('price');
+        $product->quantity      = $request->get('quantity');
+        $product->expire        = $request->get('expire');
+        $product->weight        = $request->get('weight');
+        $product->cost          = $request->get('cost');
+        $product->discount      = $request->get('discount') ?? null;
+        $product->discount_from = $request->get('discount_from') ?? null;
+        $product->discount_to   = $request->get('discount_to') ?? null;
+        $product->display       = $request->get('display');
+        $product->deliverable   = $request->get('deliverable');
+        if (request('images')) {
+            $imagesName = Upload::uploadImages(request('images'),
+                'products/' . $product->id);
+        }
+        $product->save();
+
+        if(isset($imagesName) && is_array($imagesName))
+        {
+            foreach($imagesName as $image)
+            {
+                DB::table('product_images')->insert([
+                    'product_id'    => $product->id,
+                    'image'         => $image,
+
+                ]);
+            }
+        }
+        return redirect()->back()->with('success', __('messages.productUpdatedSuccessfully'));
+    }
+
+    public function destroy($id)
+    {
+        $product=Product::findOrFail($id);
+        foreach($product->images as $image)
+        {
+            $image->delete();
+
+        }
+        Upload::deleteDirectory('products/' . $product->id);
+        $product->delete();
+        return redirect()->back()->with('success', __('messages.productDeletedSuccessfully'));
+
     }
 
 }

@@ -20,16 +20,22 @@ class CategoryController extends Controller
     }
 
     public function store(CategoryRequest $request){
+        
+        
+        // $category=Category::all();
+        // $lastId=$category->last()->id;
+        // $id=$lastId+1;
+        // // dd($id);
         $next_id = DB::select("SHOW TABLE STATUS LIKE 'categories'");
         $next_id = $next_id[0]->Auto_increment;
         $imageName = Upload::uploadImage($request->file('image'), 'categories/' . $next_id);
         DB::table('categories')->insert([
-            'name_ar'       => $request->get('name_ar'),
-            'name_en'       => $request->get('name_en'),
-            'image'         => $imageName,
-            'display'       => $request->get('display'),
-            'created_at'    => date('Y-m-d H:i:s'),
-            'updated_at'    => date('Y-m-d H:i:s'),
+            'name_ar' => $request->get('name_ar'),
+            'name_en' => $request->get('name_en'),
+            'image' => $imageName,
+            'display' => $request->get('display'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
         ]);
         return redirect()->back()->with('success', __('messages.categoryAddedSuccessfully'));
 
@@ -59,7 +65,18 @@ class CategoryController extends Controller
         return redirect()->back()->with('success', __('messages.categoryUpdatedSuccessfully'));
 
     }
-    public function destroy(){
+    public function destroy($id){
+        $category=Category::findOrFail($id);
+        // dd($category->products);
+        if($category->products->count() == 0){
+            Upload::deleteDirectory('categories/'.$category->id);
+            $category->delete();
+            return redirect()->back()->with('success', __('messages.categoryDeletedSuccessfully'));
+        }
+        else{
+
+            return redirect()->back()->with('danger', __('messages.categoryHasProducts'));
+        }
 
     }
 
@@ -87,6 +104,6 @@ class CategoryController extends Controller
         return response()->json($products, 200);
     }
     
-
+    
 
 }

@@ -59,10 +59,10 @@
                                         <label for="quantity">@lang('dashboard.quantity')</label>
                                         <input id="quantity" type="text" name="quantity" required placeholder="@lang('dashboard.quantity')" class="form-control">
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    {{-- <div class="form-group col-md-6">
                                         <label for="code">@lang('dashboard.code')</label>
                                         <input id="code" type="text" name="code" required placeholder="@lang('dashboard.code')" class="form-control">
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group col-md-6">
                                         <label for="expire">@lang('dashboard.expire')</label>
                                         <input id="expire" type="date" name="expire" required placeholder="@lang('dashboard.expire')" class="form-control">

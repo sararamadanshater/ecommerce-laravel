@@ -51,8 +51,8 @@ Route::middleware(['adminAuth'])->group(function () {
     Route::resource('categories', 'CategoryController');
     Route::post('categories/switch', 'CategoryController@switch')
         ->name('categories.switch');
-    // Route::post('categories/category/products', 'CategoryController@products')
-    //     ->name('categories.products');
+    Route::get('categories/{category}/products', 'CategoryController@products')
+    ->name('categories.products');
 
     Route::resource( 'products','ProductController',);
     Route::post('products/switch', 'ProductController@switch')
