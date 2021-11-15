@@ -13,12 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 // Route::get('/admin', function () {
 //     return view('dashboard.index');
 // })->name('dashboard.admin');
+
+
+
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('category/{category}', 'HomeController@category')->name('category');
 
 Route::get('lang/{locale}', function ($locale) {
     if (in_array($locale, config()->get('app.locales'))) {

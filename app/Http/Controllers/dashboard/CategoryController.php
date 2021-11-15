@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\dashboard;
-use DB;
+// use DB;
 use App\Helper\Upload;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\dashboard\CategoryRequest;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
