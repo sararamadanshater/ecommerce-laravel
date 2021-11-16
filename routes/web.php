@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('category/{category}', 'HomeController@category')->name('category');
+Route::any('products', 'HomeController@products')->name('products');
+Route::get('products/{id}', 'HomeController@show')->name('product.show');
 
 Route::get('lang/{locale}', function ($locale) {
     if (in_array($locale, config()->get('app.locales'))) {

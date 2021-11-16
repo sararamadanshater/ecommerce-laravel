@@ -27,7 +27,7 @@
     <div class="featured container no-gutter">
 
         <div class="row posts">
-            @foreach($category->products as $product)
+            @foreach($products as $product)
             <div id="1" class="item new col-md-4">
               <a href="{{route('product.show',$product['id'])}}">
                 <div class="featured-item">
