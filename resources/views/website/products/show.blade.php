@@ -16,7 +16,7 @@
                 @foreach($product->images as $key => $image)
                 <div id="slider" class="flexslider">
                  
-                  <ul class="slides">
+                  <ul class="slides" style="list-style: none;">
                    
                     <li>
                       <img src="{{ $image['image'] }}" class="w-100" alt="{{ $product['name_en'] }}" style="height: 350px" />
